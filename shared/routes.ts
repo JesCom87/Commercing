@@ -5,7 +5,9 @@ import {
   insertEmployeeSchema, employees,
   insertOperationSchema, operations,
   insertEventSchema, events,
-  insertInvoiceSchema, invoices
+  insertInvoiceSchema, invoices,
+  insertMarketDataSchema, marketData,
+  insertMarketingSchema, marketing
 } from './schema';
 
 // ============================================
@@ -36,13 +38,11 @@ export const api = {
         200: z.array(z.custom<typeof ledger.$inferSelect>()),
       },
     },
-    createLedgerEntry: {
-      method: 'POST' as const,
-      path: '/api/office/ledger',
-      input: insertLedgerSchema,
+    listMarketData: {
+      method: 'GET' as const,
+      path: '/api/office/market',
       responses: {
-        201: z.custom<typeof ledger.$inferSelect>(),
-        400: errorSchemas.validation,
+        200: z.array(z.custom<typeof marketData.$inferSelect>()),
       },
     },
   },
@@ -54,15 +54,6 @@ export const api = {
         200: z.array(z.custom<typeof inventory.$inferSelect>()),
       },
     },
-    createInventoryItem: {
-      method: 'POST' as const,
-      path: '/api/field/inventory',
-      input: insertInventorySchema,
-      responses: {
-        201: z.custom<typeof inventory.$inferSelect>(),
-        400: errorSchemas.validation,
-      },
-    },
     listEmployees: {
       method: 'GET' as const,
       path: '/api/field/employees',
@@ -70,13 +61,11 @@ export const api = {
         200: z.array(z.custom<typeof employees.$inferSelect>()),
       },
     },
-    createEmployee: {
-      method: 'POST' as const,
-      path: '/api/field/employees',
-      input: insertEmployeeSchema,
+    listMarketing: {
+      method: 'GET' as const,
+      path: '/api/field/marketing',
       responses: {
-        201: z.custom<typeof employees.$inferSelect>(),
-        400: errorSchemas.validation,
+        200: z.array(z.custom<typeof marketing.$inferSelect>()),
       },
     },
   },
@@ -88,15 +77,6 @@ export const api = {
         200: z.array(z.custom<typeof operations.$inferSelect>()),
       },
     },
-    createOperation: {
-      method: 'POST' as const,
-      path: '/api/outfit/operations',
-      input: insertOperationSchema,
-      responses: {
-        201: z.custom<typeof operations.$inferSelect>(),
-        400: errorSchemas.validation,
-      },
-    },
   },
   agenda: {
     listEvents: {
@@ -106,15 +86,6 @@ export const api = {
         200: z.array(z.custom<typeof events.$inferSelect>()),
       },
     },
-    createEvent: {
-      method: 'POST' as const,
-      path: '/api/agenda/events',
-      input: insertEventSchema,
-      responses: {
-        201: z.custom<typeof events.$inferSelect>(),
-        400: errorSchemas.validation,
-      },
-    },
   },
   score: {
     listInvoices: {
@@ -122,15 +93,6 @@ export const api = {
       path: '/api/score/invoices',
       responses: {
         200: z.array(z.custom<typeof invoices.$inferSelect>()),
-      },
-    },
-    createInvoice: {
-      method: 'POST' as const,
-      path: '/api/score/invoices',
-      input: insertInvoiceSchema,
-      responses: {
-        201: z.custom<typeof invoices.$inferSelect>(),
-        400: errorSchemas.validation,
       },
     },
   },
