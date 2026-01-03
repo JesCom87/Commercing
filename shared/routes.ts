@@ -6,13 +6,10 @@ import {
   insertOperationSchema, operations,
   insertEventSchema, events,
   insertInvoiceSchema, invoices,
-  insertMarketDataSchema, marketData,
-  insertMarketingSchema, marketing
+  insertMarketingSchema, marketing,
+  insertMarketDataSchema, marketData
 } from './schema';
 
-// ============================================
-// SHARED ERROR SCHEMAS
-// ============================================
 export const errorSchemas = {
   validation: z.object({
     message: z.string(),
@@ -26,74 +23,91 @@ export const errorSchemas = {
   }),
 };
 
-// ============================================
-// API CONTRACT
-// ============================================
 export const api = {
   office: {
     listLedger: {
       method: 'GET' as const,
       path: '/api/office/ledger',
-      responses: {
-        200: z.array(z.custom<typeof ledger.$inferSelect>()),
-      },
+      responses: { 200: z.array(z.custom<typeof ledger.$inferSelect>()) },
+    },
+    createLedgerEntry: {
+      method: 'POST' as const,
+      path: '/api/office/ledger',
+      input: insertLedgerSchema,
+      responses: { 201: z.custom<typeof ledger.$inferSelect>(), 400: errorSchemas.validation },
     },
     listMarketData: {
       method: 'GET' as const,
       path: '/api/office/market',
-      responses: {
-        200: z.array(z.custom<typeof marketData.$inferSelect>()),
-      },
-    },
+      responses: { 200: z.array(z.custom<typeof marketData.$inferSelect>()) },
+    }
   },
   field: {
     listInventory: {
       method: 'GET' as const,
       path: '/api/field/inventory',
-      responses: {
-        200: z.array(z.custom<typeof inventory.$inferSelect>()),
-      },
+      responses: { 200: z.array(z.custom<typeof inventory.$inferSelect>()) },
+    },
+    createInventoryItem: {
+      method: 'POST' as const,
+      path: '/api/field/inventory',
+      input: insertInventorySchema,
+      responses: { 201: z.custom<typeof inventory.$inferSelect>(), 400: errorSchemas.validation },
     },
     listEmployees: {
       method: 'GET' as const,
       path: '/api/field/employees',
-      responses: {
-        200: z.array(z.custom<typeof employees.$inferSelect>()),
-      },
+      responses: { 200: z.array(z.custom<typeof employees.$inferSelect>()) },
+    },
+    createEmployee: {
+      method: 'POST' as const,
+      path: '/api/field/employees',
+      input: insertEmployeeSchema,
+      responses: { 201: z.custom<typeof employees.$inferSelect>(), 400: errorSchemas.validation },
     },
     listMarketing: {
       method: 'GET' as const,
       path: '/api/field/marketing',
-      responses: {
-        200: z.array(z.custom<typeof marketing.$inferSelect>()),
-      },
-    },
+      responses: { 200: z.array(z.custom<typeof marketing.$inferSelect>()) },
+    }
   },
   outfit: {
     listOperations: {
       method: 'GET' as const,
       path: '/api/outfit/operations',
-      responses: {
-        200: z.array(z.custom<typeof operations.$inferSelect>()),
-      },
+      responses: { 200: z.array(z.custom<typeof operations.$inferSelect>()) },
+    },
+    createOperation: {
+      method: 'POST' as const,
+      path: '/api/outfit/operations',
+      input: insertOperationSchema,
+      responses: { 201: z.custom<typeof operations.$inferSelect>(), 400: errorSchemas.validation },
     },
   },
   agenda: {
     listEvents: {
       method: 'GET' as const,
       path: '/api/agenda/events',
-      responses: {
-        200: z.array(z.custom<typeof events.$inferSelect>()),
-      },
+      responses: { 200: z.array(z.custom<typeof events.$inferSelect>()) },
+    },
+    createEvent: {
+      method: 'POST' as const,
+      path: '/api/agenda/events',
+      input: insertEventSchema,
+      responses: { 201: z.custom<typeof events.$inferSelect>(), 400: errorSchemas.validation },
     },
   },
   score: {
     listInvoices: {
       method: 'GET' as const,
       path: '/api/score/invoices',
-      responses: {
-        200: z.array(z.custom<typeof invoices.$inferSelect>()),
-      },
+      responses: { 200: z.array(z.custom<typeof invoices.$inferSelect>()) },
+    },
+    createInvoice: {
+      method: 'POST' as const,
+      path: '/api/score/invoices',
+      input: insertInvoiceSchema,
+      responses: { 201: z.custom<typeof invoices.$inferSelect>(), 400: errorSchemas.validation },
     },
   },
 };
