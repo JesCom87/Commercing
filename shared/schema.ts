@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean, timestamp, decimal } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, timestamp, decimal } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -7,29 +7,23 @@ export const ledger = pgTable("ledger", {
   id: serial("id").primaryKey(),
   type: text("type").notNull(), // 'debit' | 'credit'
   category: text("category").notNull(), // 'market', 'fund', 'asset', 'liability'
-  subcategory: text("subcategory"), // 'supply', 'demand', 'means', 'ends', etc.
+  subcategory: text("subcategory"), // 'StationState', 'MarketPlace', 'DoubleEntry'
+  detail: text("detail"), // 'Supply|Demand', 'Means|Ends', 'Deficiency|Sufficiency', etc.
   amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
   description: text("description").notNull(),
   date: timestamp("date").defaultNow(),
 });
 
-export const marketData = pgTable("market_data", {
-  id: serial("id").primaryKey(),
-  indicator: text("indicator").notNull(), // 'supply', 'demand', 'bearish', 'bullish'
-  value: decimal("value", { precision: 10, scale: 2 }).notNull(),
-  label: text("label").notNull(),
-  timestamp: timestamp("timestamp").defaultNow(),
-});
-
-// === FIELD: Supply Chain, HR & Marketing ===
+// === FIELD: Supply Chain & HR ===
 export const inventory = pgTable("inventory", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   sku: text("sku").notNull(),
   quantity: integer("quantity").notNull().default(0),
   category: text("category").notNull(), // 'material', 'product', 'asset'
-  status: text("status").notNull(), // 'procurement', 'attainment', 'consignment'
-  substatus: text("substatus"), // 'sourcing', 'provisioning', 'listing', etc.
+  subcategory: text("subcategory"), // 'PublicRelation', 'PurchaseOrder', 'TimeSheet'
+  detail: text("detail"), // 'Endorsement', 'Procurement', 'Enrollment', etc.
+  status: text("status").notNull(), // 'sourcing', 'provisioning', 'stocked'
   location: text("location"),
 });
 
@@ -38,17 +32,9 @@ export const employees = pgTable("employees", {
   name: text("name").notNull(),
   role: text("role").notNull(),
   department: text("department").notNull(),
-  status: text("status").notNull(), // 'enrollment', 'endearment', 'engagement'
-  substatus: text("substatus"), // 'recruiting', 'training', 'vacationing', etc.
+  subcategory: text("subcategory"), // 'Personnel'
+  status: text("status").notNull(), // 'recruiting', 'onboarding', 'active', 'vacation'
   email: text("email").notNull(),
-});
-
-export const marketing = pgTable("marketing", {
-  id: serial("id").primaryKey(),
-  channel: text("channel").notNull(),
-  type: text("type").notNull(), // 'endorsement', 'environment', 'emplacement'
-  action: text("action").notNull(), // 'promoting', 'scanning', 'researching', etc.
-  status: text("status").notNull(),
 });
 
 // === OUTFIT: Operations ===
@@ -62,42 +48,50 @@ export const operations = pgTable("operations", {
 });
 
 // === AGENDA: Calendar & Work ===
-export const events = pgTable("events", {
+export const agenda = pgTable("agenda", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
-  category: text("category").notNull(), // 'date', 'work', 'talk'
-  type: text("type").notNull(), // 'calendar', 'project', 'space', etc.
+  type: text("type").notNull(), // 'project', 'task', 'meeting', 'space'
+  subcategory: text("subcategory"), // 'Date', 'Work', 'Talk'
   startTime: timestamp("start_time").notNull(),
   endTime: timestamp("end_time").notNull(),
   description: text("description"),
 });
 
 // === SCORE: Invoicing & Payments ===
-export const invoices = pgTable("invoices", {
+export const score = pgTable("score", {
   id: serial("id").primaryKey(),
   clientName: text("client_name").notNull(),
   amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
-  category: text("category").notNull(), // 'appraisal', 'billing', 'payment'
-  status: text("status").notNull(), // 'estimate', 'invoice', 'receipt', 'withdrawal', 'deposit'
+  status: text("status").notNull(), // 'estimate', 'invoice', 'receipt', 'paid'
+  type: text("type").notNull(), // 'withdrawal', 'deposit', 'appraisal', 'billing'
+  dueDate: timestamp("due_date"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
 // === SCHEMAS ===
 export const insertLedgerSchema = createInsertSchema(ledger).omit({ id: true, date: true });
-export const insertMarketDataSchema = createInsertSchema(marketData).omit({ id: true, timestamp: true });
 export const insertInventorySchema = createInsertSchema(inventory).omit({ id: true });
 export const insertEmployeeSchema = createInsertSchema(employees).omit({ id: true });
-export const insertMarketingSchema = createInsertSchema(marketing).omit({ id: true });
 export const insertOperationSchema = createInsertSchema(operations).omit({ id: true });
-export const insertEventSchema = createInsertSchema(events).omit({ id: true });
-export const insertInvoiceSchema = createInsertSchema(invoices).omit({ id: true, createdAt: true });
+export const insertAgendaSchema = createInsertSchema(agenda).omit({ id: true });
+export const insertScoreSchema = createInsertSchema(score).omit({ id: true, createdAt: true });
 
 // === TYPES ===
 export type LedgerEntry = typeof ledger.$inferSelect;
+export type InsertLedgerEntry = z.infer<typeof insertLedgerSchema>;
+
 export type InventoryItem = typeof inventory.$inferSelect;
+export type InsertInventoryItem = z.infer<typeof insertInventorySchema>;
+
 export type Employee = typeof employees.$inferSelect;
+export type InsertEmployee = z.infer<typeof insertEmployeeSchema>;
+
 export type Operation = typeof operations.$inferSelect;
-export type Event = typeof events.$inferSelect;
-export type Invoice = typeof invoices.$inferSelect;
-export type Marketing = typeof marketing.$inferSelect;
-export type MarketData = typeof marketData.$inferSelect;
+export type InsertOperation = z.infer<typeof insertOperationSchema>;
+
+export type AgendaEntry = typeof agenda.$inferSelect;
+export type InsertAgendaEntry = z.infer<typeof insertAgendaSchema>;
+
+export type ScoreEntry = typeof score.$inferSelect;
+export type InsertScoreEntry = z.infer<typeof insertScoreSchema>;

@@ -1,67 +1,61 @@
 import { db } from "./db";
 import {
-  ledger, inventory, employees, operations, events, invoices, marketing, marketData,
+  ledger, inventory, employees, operations, agenda, score,
   type LedgerEntry, type InventoryItem, type Employee,
-  type Operation, type Event, type Invoice, type Marketing, type MarketData
+  type Operation, type AgendaEntry, type ScoreEntry,
+  type InsertLedgerEntry, 
+  type InsertInventoryItem,
+  type InsertEmployee,
+  type InsertOperation,
+  type InsertAgendaEntry,
+  type InsertScoreEntry
 } from "@shared/schema";
-import { z } from "zod";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   getLedger(): Promise<LedgerEntry[]>;
-  createLedgerEntry(entry: any): Promise<LedgerEntry>;
-  getMarketData(): Promise<MarketData[]>;
-
+  createLedgerEntry(entry: InsertLedgerEntry): Promise<LedgerEntry>;
   getInventory(): Promise<InventoryItem[]>;
-  createInventoryItem(item: any): Promise<InventoryItem>;
+  createInventoryItem(item: InsertInventoryItem): Promise<InventoryItem>;
   getEmployees(): Promise<Employee[]>;
-  createEmployee(employee: any): Promise<Employee>;
-  getMarketing(): Promise<Marketing[]>;
-
+  createEmployee(emp: InsertEmployee): Promise<Employee>;
   getOperations(): Promise<Operation[]>;
-  createOperation(op: any): Promise<Operation>;
-
-  getEvents(): Promise<Event[]>;
-  createEvent(event: any): Promise<Event>;
-
-  getInvoices(): Promise<Invoice[]>;
-  createInvoice(invoice: any): Promise<Invoice>;
+  createOperation(op: InsertOperation): Promise<Operation>;
+  getAgenda(): Promise<AgendaEntry[]>;
+  createAgendaEntry(entry: InsertAgendaEntry): Promise<AgendaEntry>;
+  getScore(): Promise<ScoreEntry[]>;
+  createScoreEntry(entry: InsertScoreEntry): Promise<ScoreEntry>;
 }
 
 export class DatabaseStorage implements IStorage {
-  async getLedger(): Promise<LedgerEntry[]> { return await db.select().from(ledger); }
-  async createLedgerEntry(entry: any): Promise<LedgerEntry> {
+  async getLedger() { return await db.select().from(ledger); }
+  async createLedgerEntry(entry: InsertLedgerEntry) {
     const [created] = await db.insert(ledger).values(entry).returning();
     return created;
   }
-  async getMarketData(): Promise<MarketData[]> { return await db.select().from(marketData); }
-
-  async getInventory(): Promise<InventoryItem[]> { return await db.select().from(inventory); }
-  async createInventoryItem(item: any): Promise<InventoryItem> {
+  async getInventory() { return await db.select().from(inventory); }
+  async createInventoryItem(item: InsertInventoryItem) {
     const [created] = await db.insert(inventory).values(item).returning();
     return created;
   }
-  async getEmployees(): Promise<Employee[]> { return await db.select().from(employees); }
-  async createEmployee(employee: any): Promise<Employee> {
-    const [created] = await db.insert(employees).values(employee).returning();
+  async getEmployees() { return await db.select().from(employees); }
+  async createEmployee(emp: InsertEmployee) {
+    const [created] = await db.insert(employees).values(emp).returning();
     return created;
   }
-  async getMarketing(): Promise<Marketing[]> { return await db.select().from(marketing); }
-
-  async getOperations(): Promise<Operation[]> { return await db.select().from(operations); }
-  async createOperation(op: any): Promise<Operation> {
+  async getOperations() { return await db.select().from(operations); }
+  async createOperation(op: InsertOperation) {
     const [created] = await db.insert(operations).values(op).returning();
     return created;
   }
-
-  async getEvents(): Promise<Event[]> { return await db.select().from(events); }
-  async createEvent(event: any): Promise<Event> {
-    const [created] = await db.insert(events).values(event).returning();
+  async getAgenda() { return await db.select().from(agenda); }
+  async createAgendaEntry(entry: InsertAgendaEntry) {
+    const [created] = await db.insert(agenda).values(entry).returning();
     return created;
   }
-
-  async getInvoices(): Promise<Invoice[]> { return await db.select().from(invoices); }
-  async createInvoice(invoice: any): Promise<Invoice> {
-    const [created] = await db.insert(invoices).values(invoice).returning();
+  async getScore() { return await db.select().from(score); }
+  async createScoreEntry(entry: InsertScoreEntry) {
+    const [created] = await db.insert(score).values(entry).returning();
     return created;
   }
 }

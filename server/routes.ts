@@ -23,7 +23,7 @@ export async function registerRoutes(
         res.status(400).json({ message: err.errors[0].message });
         return;
       }
-      throw err;
+      res.status(500).json({ message: "Internal server error" });
     }
   });
 
@@ -42,7 +42,7 @@ export async function registerRoutes(
         res.status(400).json({ message: err.errors[0].message });
         return;
       }
-      throw err;
+      res.status(500).json({ message: "Internal server error" });
     }
   });
   app.get(api.field.listEmployees.path, async (_req, res) => {
@@ -59,7 +59,7 @@ export async function registerRoutes(
         res.status(400).json({ message: err.errors[0].message });
         return;
       }
-      throw err;
+      res.status(500).json({ message: "Internal server error" });
     }
   });
 
@@ -78,13 +78,13 @@ export async function registerRoutes(
         res.status(400).json({ message: err.errors[0].message });
         return;
       }
-      throw err;
+      res.status(500).json({ message: "Internal server error" });
     }
   });
 
   // === AGENDA ===
   app.get(api.agenda.listEvents.path, async (_req, res) => {
-    const data = await storage.getEvents();
+    const data = await storage.getAgenda();
     res.json(data);
   });
   app.post(api.agenda.createEvent.path, async (req, res) => {
@@ -94,79 +94,74 @@ export async function registerRoutes(
         startTime: new Date(req.body.startTime),
         endTime: new Date(req.body.endTime),
       });
-      const event = await storage.createEvent(input);
+      const event = await storage.createAgendaEntry(input);
       res.status(201).json(event);
     } catch (err) {
       if (err instanceof z.ZodError) {
         res.status(400).json({ message: err.errors[0].message });
         return;
       }
-      throw err;
+      res.status(500).json({ message: "Internal server error" });
     }
   });
 
   // === SCORE ===
   app.get(api.score.listInvoices.path, async (_req, res) => {
-    const data = await storage.getInvoices();
+    const data = await storage.getScore();
     res.json(data);
   });
   app.post(api.score.createInvoice.path, async (req, res) => {
     try {
       const input = api.score.createInvoice.input.parse(req.body);
-      const inv = await storage.createInvoice(input);
+      const inv = await storage.createScoreEntry(input);
       res.status(201).json(inv);
     } catch (err) {
       if (err instanceof z.ZodError) {
         res.status(400).json({ message: err.errors[0].message });
         return;
       }
-      throw err;
+      res.status(500).json({ message: "Internal server error" });
     }
   });
 
+  // Initial seeding if empty
   await seedData();
 
   return httpServer;
 }
 
-// Helper to seed data if empty
 async function seedData() {
-  const ledger = await storage.getLedger();
-  if (ledger.length === 0) {
+  const ledgerEntries = await storage.getLedger();
+  if (ledgerEntries.length === 0) {
     await storage.createLedgerEntry({
       type: 'credit',
       category: 'market',
-      amount: 5000.00,
-      description: 'Q1 Market Fund Injection'
+      subcategory: 'StationState',
+      detail: 'Supply|Demand',
+      amount: "5000.00",
+      description: 'Initial Market Position'
     });
     await storage.createLedgerEntry({
       type: 'debit',
-      category: 'liability',
-      amount: 1200.50,
-      description: 'Office Rent'
+      category: 'finance',
+      subcategory: 'MarketPlace',
+      detail: 'Cycles (Bearish|Bullish)',
+      amount: "1500.00",
+      description: 'Capital Allocation'
     });
   }
 
-  const inventory = await storage.getInventory();
-  if (inventory.length === 0) {
+  const inventoryItems = await storage.getInventory();
+  if (inventoryItems.length === 0) {
     await storage.createInventoryItem({
-      name: 'Steel Beams',
-      sku: 'MAT-001',
-      quantity: 500,
+      name: 'Primary Materiel',
+      sku: 'FIELD-PO-001',
+      quantity: 100,
       category: 'material',
+      subcategory: 'PurchaseOrder',
+      detail: 'Procurement (Sourcing|Bearing)',
       status: 'stocked',
-      location: 'Warehouse A'
-    });
-  }
-
-  const employees = await storage.getEmployees();
-  if (employees.length === 0) {
-    await storage.createEmployee({
-      name: 'John Doe',
-      role: 'Manager',
-      department: 'Finance',
-      status: 'active',
-      email: 'john@commercing.com'
+      location: 'Main Hub'
     });
   }
 }
