@@ -1,8 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { api, type InsertLedgerEntry } from "@shared/routes";
+import { api } from "@shared/routes";
+import type { LedgerEntry, InsertLedgerEntry } from "@shared/schema";
 
 export function useLedger() {
-  return useQuery({
+  return useQuery<LedgerEntry[]>({
     queryKey: [api.office.listLedger.path],
     queryFn: async () => {
       const res = await fetch(api.office.listLedger.path, { credentials: "include" });

@@ -1,8 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { api, type InsertInvoice } from "@shared/routes";
+import { api } from "@shared/routes";
+import type { ScoreEntry, InsertScoreEntry } from "@shared/schema";
 
 export function useInvoices() {
-  return useQuery({
+  return useQuery<ScoreEntry[]>({
     queryKey: [api.score.listInvoices.path],
     queryFn: async () => {
       const res = await fetch(api.score.listInvoices.path, { credentials: "include" });
@@ -15,7 +16,7 @@ export function useInvoices() {
 export function useCreateInvoice() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (data: InsertInvoice) => {
+    mutationFn: async (data: InsertScoreEntry) => {
       const validated = api.score.createInvoice.input.parse(data);
       const res = await fetch(api.score.createInvoice.path, {
         method: api.score.createInvoice.method,

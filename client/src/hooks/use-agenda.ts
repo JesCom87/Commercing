@@ -1,8 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { api, type InsertEvent } from "@shared/routes";
+import { api } from "@shared/routes";
+import type { AgendaEntry, InsertAgendaEntry } from "@shared/schema";
 
 export function useEvents() {
-  return useQuery({
+  return useQuery<AgendaEntry[]>({
     queryKey: [api.agenda.listEvents.path],
     queryFn: async () => {
       const res = await fetch(api.agenda.listEvents.path, { credentials: "include" });
@@ -15,7 +16,7 @@ export function useEvents() {
 export function useCreateEvent() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (data: InsertEvent) => {
+    mutationFn: async (data: InsertAgendaEntry) => {
       const validated = api.agenda.createEvent.input.parse(data);
       const res = await fetch(api.agenda.createEvent.path, {
         method: api.agenda.createEvent.method,

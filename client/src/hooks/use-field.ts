@@ -1,9 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { api, type InsertInventoryItem, type InsertEmployee } from "@shared/routes";
+import { api } from "@shared/routes";
+import type { InventoryItem, InsertInventoryItem, Employee, InsertEmployee } from "@shared/schema";
 
 // --- Inventory ---
 export function useInventory() {
-  return useQuery({
+  return useQuery<InventoryItem[]>({
     queryKey: [api.field.listInventory.path],
     queryFn: async () => {
       const res = await fetch(api.field.listInventory.path, { credentials: "include" });
@@ -35,7 +36,7 @@ export function useCreateInventoryItem() {
 
 // --- Employees ---
 export function useEmployees() {
-  return useQuery({
+  return useQuery<Employee[]>({
     queryKey: [api.field.listEmployees.path],
     queryFn: async () => {
       const res = await fetch(api.field.listEmployees.path, { credentials: "include" });
