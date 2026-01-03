@@ -1,8 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { api, type InsertOperation } from "@shared/routes";
+import { api } from "@shared/routes";
+import type { Operation, InsertOperation } from "@shared/schema";
 
 export function useOperations() {
-  return useQuery({
+  return useQuery<Operation[]>({
     queryKey: [api.outfit.listOperations.path],
     queryFn: async () => {
       const res = await fetch(api.outfit.listOperations.path, { credentials: "include" });
