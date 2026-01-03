@@ -2,7 +2,7 @@ import { Shell } from "@/components/layout/Shell";
 import { useInventory, useCreateInventoryItem, useEmployees, useCreateEmployee } from "@/hooks/use-field";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Plus, Package, Users } from "lucide-react";
+import { Plus, Package, Users, Megaphone, ShieldCheck, MapPin, ShoppingCart, Truck, ClipboardList, GraduationCap, Heart } from "lucide-react";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { insertInventorySchema, insertEmployeeSchema } from "@shared/schema";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Card } from "@/components/ui/card";
 
 export default function Field() {
   const { data: inventory, isLoading: isLoadingInv } = useInventory();
@@ -20,24 +21,46 @@ export default function Field() {
     <Shell>
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white font-display">Field</h1>
-        <p className="text-muted-foreground mt-2">Supply chain logistics & human resources.</p>
+        <p className="text-muted-foreground mt-2">Marketing, Supply Chain, and Human Resources.</p>
       </div>
 
-      <Tabs defaultValue="inventory" className="space-y-6">
+      <Tabs defaultValue="marketing" className="space-y-6">
         <TabsList className="bg-card border border-white/5 p-1">
-          <TabsTrigger value="inventory" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-            <Package className="w-4 h-4 mr-2" /> Inventory
+          <TabsTrigger value="marketing">
+            <Megaphone className="w-4 h-4 mr-2" /> Marketing
           </TabsTrigger>
-          <TabsTrigger value="employees" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-            <Users className="w-4 h-4 mr-2" /> Employees
+          <TabsTrigger value="supplychain">
+            <ShoppingCart className="w-4 h-4 mr-2" /> Supply Chain
+          </TabsTrigger>
+          <TabsTrigger value="hr">
+            <Users className="w-4 h-4 mr-2" /> Human Resources
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="inventory">
-          <InventorySection data={inventory} loading={isLoadingInv} />
+        <TabsContent value="marketing">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <MetricCard title="Endorsement" value="Promoting | Advertising" icon={Megaphone} />
+            <MetricCard title="Environment" value="Scanning | Auditing" icon={ShieldCheck} />
+            <MetricCard title="Emplacement" value="Researching | Positioning" icon={MapPin} />
+          </div>
+          <InventorySection data={inventory?.filter(i => i.subcategory === 'PublicRelation')} loading={isLoadingInv} subcategory="PublicRelation" />
         </TabsContent>
 
-        <TabsContent value="employees">
+        <TabsContent value="supplychain">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <MetricCard title="Procurement" value="Sourcing | Bearing" icon={Truck} />
+            <MetricCard title="Attainment" value="Provisioning | Logisting" icon={ShoppingCart} />
+            <MetricCard title="Consignment" value="Listing | Vending" icon={ClipboardList} />
+          </div>
+          <InventorySection data={inventory?.filter(i => i.subcategory === 'PurchaseOrder')} loading={isLoadingInv} subcategory="PurchaseOrder" />
+        </TabsContent>
+
+        <TabsContent value="hr">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <MetricCard title="Enrollment" value="Recruiting | Onboarding" icon={Users} />
+            <MetricCard title="Endearment" value="Training | Educating" icon={GraduationCap} />
+            <MetricCard title="Engagement" value="Registering | Vacationing" icon={Heart} />
+          </div>
           <EmployeeSection data={employees} loading={isLoadingEmp} />
         </TabsContent>
       </Tabs>
@@ -45,7 +68,23 @@ export default function Field() {
   );
 }
 
-function InventorySection({ data, loading }: { data: any, loading: boolean }) {
+function MetricCard({ title, value, icon: Icon }: { title: string, value: string, icon: any }) {
+  return (
+    <Card className="glass-card border-white/5 p-6">
+      <div className="flex items-center gap-4">
+        <div className="p-3 rounded-lg bg-primary/10 text-primary">
+          <Icon className="w-6 h-6" />
+        </div>
+        <div>
+          <p className="text-sm text-muted-foreground">{title}</p>
+          <p className="text-xl font-bold text-white">{value}</p>
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+function InventorySection({ data, loading, subcategory }: { data: any, loading: boolean, subcategory: string }) {
   const createMutation = useCreateInventoryItem();
   const [open, setOpen] = useState(false);
   const form = useForm({
@@ -55,6 +94,8 @@ function InventorySection({ data, loading }: { data: any, loading: boolean }) {
       sku: "",
       quantity: 0,
       category: "material",
+      subcategory: subcategory,
+      detail: "",
       status: "stocked",
       location: "",
     }
@@ -75,11 +116,11 @@ function InventorySection({ data, loading }: { data: any, loading: boolean }) {
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-              <Plus className="w-4 h-4 mr-2" /> Add Item
+              <Plus className="w-4 h-4 mr-2" /> Add {subcategory === 'PublicRelation' ? 'Campaign' : 'Item'}
             </Button>
           </DialogTrigger>
           <DialogContent className="glass-card border-white/10 text-white">
-            <DialogHeader><DialogTitle>Add Inventory Item</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>Add {subcategory === 'PublicRelation' ? 'Marketing Campaign' : 'Inventory Item'}</DialogTitle></DialogHeader>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <FormField control={form.control} name="name" render={({field}) => (
@@ -87,24 +128,17 @@ function InventorySection({ data, loading }: { data: any, loading: boolean }) {
                 )}/>
                 <div className="grid grid-cols-2 gap-4">
                   <FormField control={form.control} name="sku" render={({field}) => (
-                    <FormItem><FormLabel>SKU</FormLabel><FormControl><Input {...field} className="bg-secondary/50 border-white/10 text-white"/></FormControl><FormMessage/></FormItem>
+                    <FormItem><FormLabel>SKU / ID</FormLabel><FormControl><Input {...field} className="bg-secondary/50 border-white/10 text-white"/></FormControl><FormMessage/></FormItem>
                   )}/>
                   <FormField control={form.control} name="quantity" render={({field}) => (
-                    <FormItem><FormLabel>Quantity</FormLabel><FormControl><Input {...field} type="number" onChange={e => field.onChange(parseInt(e.target.value))} className="bg-secondary/50 border-white/10 text-white"/></FormControl><FormMessage/></FormItem>
+                    <FormItem><FormLabel>Quantity / Target</FormLabel><FormControl><Input {...field} type="number" onChange={e => field.onChange(parseInt(e.target.value))} className="bg-secondary/50 border-white/10 text-white"/></FormControl><FormMessage/></FormItem>
                   )}/>
                 </div>
-                <FormField control={form.control} name="category" render={({field}) => (
-                  <FormItem><FormLabel>Category</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl><SelectTrigger className="bg-secondary/50 border-white/10 text-white"><SelectValue placeholder="Select" /></SelectTrigger></FormControl>
-                    <SelectContent className="bg-card border-white/10">
-                      <SelectItem value="material">Material</SelectItem>
-                      <SelectItem value="product">Product</SelectItem>
-                      <SelectItem value="asset">Asset</SelectItem>
-                    </SelectContent>
-                  </Select><FormMessage/></FormItem>
+                <FormField control={form.control} name="detail" render={({field}) => (
+                  <FormItem><FormLabel>Detail</FormLabel><FormControl><Input {...field} className="bg-secondary/50 border-white/10 text-white"/></FormControl><FormMessage/></FormItem>
                 )}/>
                 <Button type="submit" className="w-full bg-primary" disabled={createMutation.isPending}>
-                  {createMutation.isPending ? "Creating..." : "Create Item"}
+                  {createMutation.isPending ? "Creating..." : "Create"}
                 </Button>
               </form>
             </Form>
@@ -114,7 +148,7 @@ function InventorySection({ data, loading }: { data: any, loading: boolean }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {loading ? <p>Loading...</p> : data?.map((item: any) => (
-          <div key={item.id} className="glass-card p-6 rounded-xl hover:border-primary/50 transition-colors">
+          <Card key={item.id} className="glass-card p-6 rounded-xl hover:border-primary/50 transition-colors">
             <div className="flex justify-between items-start mb-4">
               <div>
                 <h3 className="text-lg font-semibold text-white">{item.name}</h3>
@@ -126,11 +160,12 @@ function InventorySection({ data, loading }: { data: any, loading: boolean }) {
                 {item.quantity} units
               </span>
             </div>
+            <p className="text-sm text-muted-foreground mb-4">{item.detail}</p>
             <div className="flex items-center justify-between text-sm text-muted-foreground pt-4 border-t border-white/5">
               <span className="capitalize">{item.category}</span>
               <span className="capitalize">{item.location || 'Unassigned'}</span>
             </div>
-          </div>
+          </Card>
         ))}
       </div>
     </div>
@@ -148,6 +183,7 @@ function EmployeeSection({ data, loading }: { data: any, loading: boolean }) {
       department: "",
       email: "",
       status: "active",
+      subcategory: "Personnel",
     }
   });
 
@@ -166,11 +202,11 @@ function EmployeeSection({ data, loading }: { data: any, loading: boolean }) {
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-              <Plus className="w-4 h-4 mr-2" /> Add Employee
+              <Plus className="w-4 h-4 mr-2" /> Add Personnel
             </Button>
           </DialogTrigger>
           <DialogContent className="glass-card border-white/10 text-white">
-            <DialogHeader><DialogTitle>Add Employee</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>Add Personnel</DialogTitle></DialogHeader>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <FormField control={form.control} name="name" render={({field}) => (
@@ -188,7 +224,7 @@ function EmployeeSection({ data, loading }: { data: any, loading: boolean }) {
                   )}/>
                 </div>
                 <Button type="submit" className="w-full bg-primary" disabled={createMutation.isPending}>
-                  {createMutation.isPending ? "Adding..." : "Add Employee"}
+                  {createMutation.isPending ? "Adding..." : "Add Personnel"}
                 </Button>
               </form>
             </Form>
@@ -198,7 +234,7 @@ function EmployeeSection({ data, loading }: { data: any, loading: boolean }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {loading ? <p>Loading...</p> : data?.map((employee: any) => (
-          <div key={employee.id} className="glass-card p-6 rounded-xl hover:border-primary/50 transition-colors flex items-center gap-4">
+          <Card key={employee.id} className="glass-card p-6 rounded-xl hover:border-primary/50 transition-colors flex items-center gap-4">
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-lg">
               {employee.name.charAt(0)}
             </div>
@@ -207,7 +243,7 @@ function EmployeeSection({ data, loading }: { data: any, loading: boolean }) {
               <p className="text-sm text-primary">{employee.role}</p>
               <p className="text-xs text-muted-foreground mt-1 capitalize">{employee.department} • {employee.status}</p>
             </div>
-          </div>
+          </Card>
         ))}
       </div>
     </div>
