@@ -1,14 +1,15 @@
 import { db } from "./db";
 import {
-  ledger, inventory, employees, operations, agenda, score,
+  ledger, inventory, employees, operations, agenda, score, mend,
   type LedgerEntry, type InventoryItem, type Employee,
-  type Operation, type AgendaEntry, type ScoreEntry,
+  type Operation, type AgendaEntry, type ScoreEntry, type MendEntry,
   type InsertLedgerEntry, 
   type InsertInventoryItem,
   type InsertEmployee,
   type InsertOperation,
   type InsertAgendaEntry,
-  type InsertScoreEntry
+  type InsertScoreEntry,
+  type InsertMendEntry
 } from "@shared/schema";
 import { eq } from "drizzle-orm";
 
@@ -25,6 +26,8 @@ export interface IStorage {
   createAgendaEntry(entry: InsertAgendaEntry): Promise<AgendaEntry>;
   getScore(): Promise<ScoreEntry[]>;
   createScoreEntry(entry: InsertScoreEntry): Promise<ScoreEntry>;
+  getMend(): Promise<MendEntry[]>;
+  createMendEntry(entry: InsertMendEntry): Promise<MendEntry>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -56,6 +59,11 @@ export class DatabaseStorage implements IStorage {
   async getScore() { return await db.select().from(score); }
   async createScoreEntry(entry: InsertScoreEntry) {
     const [created] = await db.insert(score).values(entry).returning();
+    return created;
+  }
+  async getMend() { return await db.select().from(mend); }
+  async createMendEntry(entry: InsertMendEntry) {
+    const [created] = await db.insert(mend).values(entry).returning();
     return created;
   }
 }

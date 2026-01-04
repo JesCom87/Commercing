@@ -1,6 +1,6 @@
 import { Shell } from "@/components/layout/Shell";
 import { useEvents, useCreateEvent } from "@/hooks/use-agenda";
-import { Plus, Calendar as CalendarIcon, Clock, CheckSquare, MessageSquare } from "lucide-react";
+import { Plus, Calendar as CalendarIcon, Clock, CheckSquare, MessageSquare, ClipboardList, Home, TrendingUp } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -136,8 +136,8 @@ export default function Agenda() {
 
         <TabsContent value="work">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <MetricCard title="Projects" value="Goals | Vision" icon={CheckSquare} />
-            <MetricCard title="Tasks" value="Actions | Doing" icon={ClipboardList} />
+            <MetricCard title="Projects" value="Projects | Tasks" icon={CheckSquare} />
+            <MetricCard title="Work" value="Actions | Doing" icon={ClipboardList} />
             <MetricCard title="Milestones" value="Steps | Results" icon={CheckSquare} />
           </div>
           <AgendaLayout events={events?.filter(e => e.subcategory === 'Work')} loading={isLoading} date={date} setDate={setDate} />
@@ -145,7 +145,7 @@ export default function Agenda() {
 
         <TabsContent value="talk">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <MetricCard title="Spaces" value="Shared | Areas" icon={MessageSquare} />
+            <MetricCard title="Spaces" value="Spaces | Rooms" icon={MessageSquare} />
             <MetricCard title="Rooms" value="Private | Units" icon={Home} />
             <MetricCard title="Channels" value="Voice | Data" icon={Clock} />
           </div>

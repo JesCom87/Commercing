@@ -69,6 +69,16 @@ export const score = pgTable("score", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// === MEND: Sales & Support ===
+export const mend = pgTable("mend", {
+  id: serial("id").primaryKey(),
+  type: text("type").notNull(), // 'sales', 'support'
+  category: text("category").notNull(), // 'product', 'customer'
+  status: text("status").notNull(), // 'active', 'pending', 'resolved'
+  description: text("description"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // === SCHEMAS ===
 export const insertLedgerSchema = createInsertSchema(ledger).omit({ id: true, date: true });
 export const insertInventorySchema = createInsertSchema(inventory).omit({ id: true });
@@ -76,6 +86,7 @@ export const insertEmployeeSchema = createInsertSchema(employees).omit({ id: tru
 export const insertOperationSchema = createInsertSchema(operations).omit({ id: true });
 export const insertAgendaSchema = createInsertSchema(agenda).omit({ id: true });
 export const insertScoreSchema = createInsertSchema(score).omit({ id: true, createdAt: true });
+export const insertMendSchema = createInsertSchema(mend).omit({ id: true, createdAt: true });
 
 // === TYPES ===
 export type LedgerEntry = typeof ledger.$inferSelect;
@@ -95,3 +106,6 @@ export type InsertAgendaEntry = z.infer<typeof insertAgendaSchema>;
 
 export type ScoreEntry = typeof score.$inferSelect;
 export type InsertScoreEntry = z.infer<typeof insertScoreSchema>;
+
+export type MendEntry = typeof mend.$inferSelect;
+export type InsertMendEntry = z.infer<typeof insertMendSchema>;

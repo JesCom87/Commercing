@@ -121,9 +121,9 @@ export default function Score() {
 
         <TabsContent value="gain">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <MetricCard title="Earnings" value="Profit | Growth" icon={TrendingUp} />
-            <MetricCard title="Revenue" value="Inflow | Gross" icon={Coins} />
-            <MetricCard title="Equity" value="Value | Shares" icon={Landmark} />
+            <MetricCard title="Appraisal" value="Estimate" icon={Scale} />
+            <MetricCard title="Billing" value="Invoice | Receipt" icon={Receipt} />
+            <MetricCard title="Payment" value="Withdrawal | Deposit" icon={Wallet} />
           </div>
           <ScoreTable data={score} loading={isLoading} />
         </TabsContent>

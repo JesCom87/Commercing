@@ -1,6 +1,6 @@
 import { Shell } from "@/components/layout/Shell";
 import { useLedger, useCreateLedgerEntry } from "@/hooks/use-office";
-import { Plus, ArrowUpCircle, ArrowDownCircle, TrendingUp, LineChart, RefreshCcw, DollarSign, BarChart3, Receipt } from "lucide-react";
+import { Plus, ArrowUpCircle, ArrowDownCircle, TrendingUp, LineChart, RefreshCcw, DollarSign, BarChart3, Receipt, TrendingDown, Layers, Scale, BookOpen, Calculator } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -165,7 +165,7 @@ export default function Office() {
         <TabsContent value="finance">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <MetricCard title="Cycles" value="Bearish | Bullish" icon={RefreshCcw} />
-            <MetricCard title="Bands" value="Resist | Support" icon={BarChart3} />
+            <MetricCard title="Bands" value="Resist | Support" icon={Layers} />
             <MetricCard title="Funds" value="Sell | Buy" icon={DollarSign} />
           </div>
           <LedgerTable data={ledger?.filter(e => e.subcategory === 'MarketPlace')} loading={isLoading} />
@@ -173,9 +173,9 @@ export default function Office() {
 
         <TabsContent value="accounting">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <MetricCard title="Accounts" value="Debits | Credits" icon={Receipt} />
-            <MetricCard title="Books" value="Left | Right" icon={BarChart3} />
-            <MetricCard title="Units" value="Ratios | Rates" icon={TrendingUp} />
+            <MetricCard title="Accounts" value="Debits | Credits" icon={Scale} />
+            <MetricCard title="Books" value="Left | Right" icon={BookOpen} />
+            <MetricCard title="Units" value="Ratios | Rates" icon={Calculator} />
           </div>
           <LedgerTable data={ledger?.filter(e => e.subcategory === 'DoubleEntry')} loading={isLoading} />
         </TabsContent>

@@ -5,7 +5,8 @@ import {
   insertEmployeeSchema, employees,
   insertOperationSchema, operations,
   insertAgendaSchema, agenda,
-  insertScoreSchema, score
+  insertScoreSchema, score,
+  insertMendSchema, mend
 } from './schema';
 
 // ============================================
@@ -130,6 +131,24 @@ export const api = {
       input: insertScoreSchema,
       responses: {
         201: z.custom<typeof score.$inferSelect>(),
+        400: errorSchemas.validation,
+      },
+    },
+  },
+  mend: {
+    listEntries: {
+      method: 'GET' as const,
+      path: '/api/mend/entries',
+      responses: {
+        200: z.array(z.custom<typeof mend.$inferSelect>()),
+      },
+    },
+    createEntry: {
+      method: 'POST' as const,
+      path: '/api/mend/entries',
+      input: insertMendSchema,
+      responses: {
+        201: z.custom<typeof mend.$inferSelect>(),
         400: errorSchemas.validation,
       },
     },

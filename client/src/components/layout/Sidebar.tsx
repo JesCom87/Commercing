@@ -1,16 +1,18 @@
 import { Link, useLocation } from "wouter";
-import { Building2, Truck, Factory, Calendar, Coins, LayoutDashboard } from "lucide-react";
+import { Building2, Truck, Factory, Calendar, Coins, LayoutDashboard, BookOpen, Hammer } from "lucide-react";
 
 export function Sidebar() {
   const [location] = useLocation();
 
   const menu = [
     { path: "/", label: "Dashboard", icon: LayoutDashboard },
+    { path: "/study", label: "Study Layer", icon: BookOpen },
     { path: "/office", label: "Office", icon: Building2 },
     { path: "/field", label: "Field", icon: Truck },
     { path: "/outfit", label: "Outfit", icon: Factory },
     { path: "/agenda", label: "Agenda", icon: Calendar },
     { path: "/score", label: "Score", icon: Coins },
+    { path: "/mend", label: "Mend", icon: Hammer },
   ];
 
   return (

@@ -124,6 +124,25 @@ export async function registerRoutes(
     }
   });
 
+  // === MEND ===
+  app.get(api.mend.listEntries.path, async (_req, res) => {
+    const data = await storage.getMend();
+    res.json(data);
+  });
+  app.post(api.mend.createEntry.path, async (req, res) => {
+    try {
+      const input = api.mend.createEntry.input.parse(req.body);
+      const entry = await storage.createMendEntry(input);
+      res.status(201).json(entry);
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        res.status(400).json({ message: err.errors[0].message });
+        return;
+      }
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   // Initial seeding if empty
   await seedData();
 

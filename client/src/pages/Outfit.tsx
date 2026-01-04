@@ -44,7 +44,7 @@ export default function Outfit() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold text-white font-display">Outfit</h1>
-          <p className="text-muted-foreground mt-2">Processing, Medial, and Operations.</p>
+          <p className="text-muted-foreground mt-2">Processing, Spatial, and Operations.</p>
         </div>
         
         <Dialog open={open} onOpenChange={setOpen}>
@@ -77,7 +77,7 @@ export default function Outfit() {
                     </FormItem>
                   )}/>
                   <FormField control={form.control} name="sector" render={({field}) => (
-                    <FormItem><FormLabel>Medial Sector</FormLabel>
+                    <FormItem><FormLabel>Spatial Sector</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl><SelectTrigger className="bg-secondary/50 border-white/10 text-white"><SelectValue placeholder="Select" /></SelectTrigger></FormControl>
                         <SelectContent className="bg-card border-white/10">
@@ -118,8 +118,8 @@ export default function Outfit() {
           <TabsTrigger value="processing">
             <Cpu className="w-4 h-4 mr-2" /> Processing
           </TabsTrigger>
-          <TabsTrigger value="medial">
-            <Warehouse className="w-4 h-4 mr-2" /> Medial
+          <TabsTrigger value="spatial">
+            <Warehouse className="w-4 h-4 mr-2" /> Spatial
           </TabsTrigger>
           <TabsTrigger value="operation">
             <Activity className="w-4 h-4 mr-2" /> Operation
@@ -135,7 +135,7 @@ export default function Outfit() {
           <OperationGrid data={operations} loading={isLoading} />
         </TabsContent>
 
-        <TabsContent value="medial">
+        <TabsContent value="spatial">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <MetricCard title="Residential" value="Living | Private" icon={Home} />
             <MetricCard title="Commercial" value="Business | Public" icon={Building2} />
