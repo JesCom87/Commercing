@@ -1,8 +1,16 @@
-# Replit.md
+# Commercing - Enterprise Dashboard Application
 
 ## Overview
 
-This is a new project repository that has not yet been initialized with any code or configuration files. The repository is empty and ready for development to begin. The project structure, technology stack, and architectural decisions will be established as development progresses.
+Commercing is a full-stack enterprise resource planning (ERP) dashboard application built with React, Express, and PostgreSQL. It provides a unified interface for managing business operations across six core domains:
+
+- **Office** - Economics, Finance, and Accounting (ledger management)
+- **Field** - Marketing, Supply Chain, and Human Resources (inventory, employees)
+- **Outfit** - Processing, Operations, and Manufacturing workflows
+- **Agenda** - Calendar, Tasks, and Communication scheduling
+- **Score** - Invoicing, Payments, and Financial scoring
+
+The application follows a modern monorepo structure with shared types and validation schemas between frontend and backend.
 
 ## User Preferences
 
@@ -10,22 +18,56 @@ Preferred communication style: Simple, everyday language.
 
 ## System Architecture
 
-No architectural decisions have been made yet as this is an empty repository. Key decisions to be made include:
+### Frontend Architecture
+- **Framework**: React 18 with TypeScript
+- **Routing**: Wouter (lightweight React router)
+- **State Management**: TanStack React Query for server state
+- **UI Components**: shadcn/ui built on Radix UI primitives
+- **Styling**: Tailwind CSS with custom CSS variables for theming
+- **Forms**: React Hook Form with Zod validation
+- **Charts**: Recharts for data visualization
+- **Build Tool**: Vite with custom path aliases (@/, @shared/, @assets/)
 
-1. **Frontend Framework** - Selection of UI framework (React, Vue, Svelte, etc.)
-2. **Backend Framework** - Selection of server framework (Express, Fastify, etc.)
-3. **Data Storage** - Choice of database and ORM
-4. **Authentication** - User authentication strategy
-5. **Project Structure** - Monorepo vs separate packages
+### Backend Architecture
+- **Framework**: Express.js with TypeScript
+- **Database**: PostgreSQL with Drizzle ORM
+- **API Pattern**: REST endpoints defined in shared/routes.ts with Zod schemas for type-safe contracts
+- **Storage Layer**: DatabaseStorage class implementing IStorage interface for data access abstraction
 
-These decisions should be documented here as they are made.
+### Shared Code
+- **Schema Definitions**: Drizzle table schemas in shared/schema.ts define database structure and generate Zod validation schemas via drizzle-zod
+- **API Contracts**: shared/routes.ts defines all API endpoints with input/output schemas, ensuring type safety across the stack
+- **Types**: Inferred from Drizzle schemas (InsertX, SelectX patterns)
+
+### Database Schema
+Six main tables supporting the business domains:
+- `ledger` - Financial transactions with type, category, subcategory, detail, amount
+- `inventory` - Supply chain items with SKU, quantity, status, location
+- `employees` - HR records with role, department, status
+- `operations` - Manufacturing/trading workflows with sector, status, progress
+- `agenda` - Calendar events with type, times, descriptions
+- `score` - Invoices/payments with client, amount, status, due dates
+
+### Build System
+- **Development**: tsx runs TypeScript server directly with Vite middleware for HMR
+- **Production**: Custom build script using esbuild for server bundling and Vite for client, outputs to dist/
 
 ## External Dependencies
 
-No external dependencies or integrations have been configured yet. This section should be updated to include:
+### Database
+- **PostgreSQL**: Primary database accessed via DATABASE_URL environment variable
+- **Drizzle ORM**: Type-safe query builder with push-based migrations (db:push command)
 
-1. **Database Services** - Database providers and connection details
-2. **Authentication Providers** - OAuth providers, auth services
-3. **API Integrations** - Third-party APIs consumed by the application
-4. **Cloud Services** - Hosting, storage, CDN providers
-5. **Development Tools** - Build tools, testing frameworks, CI/CD
+### Key NPM Packages
+- **@tanstack/react-query**: Server state management and caching
+- **drizzle-orm/drizzle-zod**: ORM and schema-to-validation generation
+- **@radix-ui/***: Accessible UI primitive components
+- **recharts**: Chart visualization library
+- **react-day-picker**: Calendar component
+- **date-fns**: Date formatting utilities
+- **zod**: Runtime type validation
+
+### Replit-Specific Integrations
+- **@replit/vite-plugin-runtime-error-modal**: Error overlay in development
+- **@replit/vite-plugin-cartographer**: Development tooling (dev only)
+- **@replit/vite-plugin-dev-banner**: Development environment indicator
