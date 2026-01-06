@@ -143,13 +143,13 @@ export default function Office() {
       <Tabs defaultValue="economics" className="space-y-6">
         <TabsList className="bg-card border border-white/5 p-1">
           <TabsTrigger value="economics">
-            <TrendingUp className="w-4 h-4 mr-2" /> Economics
+            <TrendingUp className="w-4 h-4 mr-2" /> StationState
           </TabsTrigger>
           <TabsTrigger value="finance">
-            <DollarSign className="w-4 h-4 mr-2" /> Finance
+            <DollarSign className="w-4 h-4 mr-2" /> MarketPlace
           </TabsTrigger>
           <TabsTrigger value="accounting">
-            <Receipt className="w-4 h-4 mr-2" /> Accounting
+            <Receipt className="w-4 h-4 mr-2" /> DoubleEntry
           </TabsTrigger>
         </TabsList>
 

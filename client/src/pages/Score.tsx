@@ -121,7 +121,7 @@ export default function Score() {
 
         <TabsContent value="gain">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <MetricCard title="Appraisal" value="Estimate" icon={Scale} />
+            <MetricCard title="Estimate" value="Plan | Quote" icon={Scale} />
             <MetricCard title="Billing" value="Invoice | Receipt" icon={Receipt} />
             <MetricCard title="Payment" value="Withdrawal | Deposit" icon={Wallet} />
           </div>

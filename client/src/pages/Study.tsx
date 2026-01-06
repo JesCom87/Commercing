@@ -6,8 +6,8 @@ export default function Study() {
   return (
     <Shell>
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-white font-display">Study Layer</h1>
-        <p className="text-muted-foreground mt-2">Conceptual foundations and enterprise evolution.</p>
+        <h1 className="text-3xl font-bold text-white font-display">Commercing</h1>
+        <p className="text-muted-foreground mt-2">Study Layer: Foundations and Evolution.</p>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -19,18 +19,19 @@ export default function Study() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="glass-card p-6">
-          <h3 className="text-lg font-semibold mb-4">Core Philosophy</h3>
-          <p className="text-muted-foreground leading-relaxed">
-            The Commercing enterprise is built on the transition from simple cash accounting to sophisticated 
-            accrual-based organizational management. Worthability is determined by the intersection of 
-            Cost, Value, and Price.
-          </p>
+          <h3 className="text-lg font-semibold mb-4">Evolutionary Path</h3>
+          <ul className="space-y-3 text-muted-foreground">
+            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-primary" /> Cash to Accrual is Evolving</li>
+            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-primary" /> Cost | Value | Price = Worthability</li>
+            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-primary" /> Management | Administration = Organization</li>
+          </ul>
         </Card>
         <Card className="glass-card p-6">
-          <h3 className="text-lg font-semibold mb-4">Structural Integrity</h3>
+          <h3 className="text-lg font-semibold mb-4">Enterprise Framework</h3>
           <p className="text-muted-foreground leading-relaxed">
-            Management and Administration together form the Organization. This layer provides the study 
-            framework for all operational sectors: Office, Field, Outfit, Agenda, Score, and Mend.
+            The Commercing study layer provides the conceptual integrity for all operational sectors. 
+            By organizing management and administration, we establish the structural foundation required 
+            for sustainable growth and precise tracking across Office, Field, Outfit, Agenda, Score, and Mend.
           </p>
         </Card>
       </div>
