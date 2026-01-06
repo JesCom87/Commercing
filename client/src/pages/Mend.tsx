@@ -22,24 +22,20 @@ export default function Mend() {
         </TabsList>
 
         <TabsContent value="sales">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <MetricCard title="Inventory" value="Listing | Vending" icon={Package} />
-            <MetricCard title="Fulfillment" value="Provisioning | Delivering" icon={Truck} />
-            <MetricCard title="Sales" value="Trading | Commerce" icon={ShoppingCart} />
-          </div>
-          <div className="glass-card p-6 rounded-2xl flex items-center justify-center border border-dashed border-white/10">
-            <p className="text-muted-foreground">Sales pipeline data will appear here.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <MetricCard title="Product" value="Product" icon={Package} />
+            <div className="glass-card p-6 rounded-2xl flex items-center justify-center border border-dashed border-white/10">
+              <p className="text-muted-foreground">Product listing details will appear here.</p>
+            </div>
           </div>
         </TabsContent>
 
         <TabsContent value="support">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <MetricCard title="Relations" value="Scanning | Auditing" icon={User} />
-            <MetricCard title="Success" value="Teaching | Guiding" icon={HeartHandshake} />
-            <MetricCard title="Feedback" value="Past | Future" icon={Activity} />
-          </div>
-          <div className="glass-card p-6 rounded-2xl flex items-center justify-center border border-dashed border-white/10">
-            <p className="text-muted-foreground">Support tickets and feedback will appear here.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <MetricCard title="Customer" value="Customer" icon={User} />
+            <div className="glass-card p-6 rounded-2xl flex items-center justify-center border border-dashed border-white/10">
+              <p className="text-muted-foreground">Customer support interactions will appear here.</p>
+            </div>
           </div>
         </TabsContent>
       </Tabs>

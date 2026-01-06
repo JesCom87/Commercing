@@ -21,45 +21,45 @@ export default function Field() {
     <Shell>
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white font-display">Field</h1>
-        <p className="text-muted-foreground mt-2">Marketing, Supply Chain, and Human Resources.</p>
+        <p className="text-muted-foreground mt-2">PublicRelation (Channel) | PurchaseOrder (Materiel) | TimeSheet (Personnel)</p>
       </div>
 
       <Tabs defaultValue="marketing" className="space-y-6">
         <TabsList className="bg-card border border-white/5 p-1">
           <TabsTrigger value="marketing">
-            <Megaphone className="w-4 h-4 mr-2" /> Marketing
+            <Megaphone className="w-4 h-4 mr-2" /> PublicRelation: (Channel) | (Marketing)
           </TabsTrigger>
           <TabsTrigger value="supplychain">
-            <ShoppingCart className="w-4 h-4 mr-2" /> Supply Chain
+            <ShoppingCart className="w-4 h-4 mr-2" /> PurchaseOrder: (Materiel) | (Supply Chain)
           </TabsTrigger>
           <TabsTrigger value="hr">
-            <Users className="w-4 h-4 mr-2" /> Human Resources
+            <Users className="w-4 h-4 mr-2" /> TimeSheet: (Personnel) | (Human Resources)
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="marketing">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <MetricCard title="Endorsement" value="Promoting | Advertising" icon={Megaphone} />
-            <MetricCard title="Environment" value="Scanning | Auditing" icon={ShieldCheck} />
-            <MetricCard title="Emplacement" value="Researching | Positioning" icon={MapPin} />
+            <MetricCard title="Endorsement" value="Promoting|Advertising" icon={Megaphone} />
+            <MetricCard title="Environment" value="Scanning|Auditing" icon={ShieldCheck} />
+            <MetricCard title="Emplacement" value="Researching|Positioning" icon={MapPin} />
           </div>
           <InventorySection data={inventory?.filter(i => i.subcategory === 'PublicRelation')} loading={isLoadingInv} subcategory="PublicRelation" />
         </TabsContent>
 
         <TabsContent value="supplychain">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <MetricCard title="Procurement" value="Sourcing | Bearing" icon={Truck} />
-            <MetricCard title="Attainment" value="Provisioning | Logisting" icon={ShoppingCart} />
-            <MetricCard title="Consignment" value="Listing | Vending" icon={ClipboardList} />
+            <MetricCard title="Procurement" value="Sourcing|Bearing" icon={Truck} />
+            <MetricCard title="Attainment" value="Provisioning|Logisting" icon={ShoppingCart} />
+            <MetricCard title="Consignment" value="Listing|Vending" icon={ClipboardList} />
           </div>
           <InventorySection data={inventory?.filter(i => i.subcategory === 'PurchaseOrder')} loading={isLoadingInv} subcategory="PurchaseOrder" />
         </TabsContent>
 
         <TabsContent value="hr">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <MetricCard title="Enrollment" value="Recruiting | Onboarding" icon={Users} />
-            <MetricCard title="Endearment" value="Training | Educating" icon={GraduationCap} />
-            <MetricCard title="Engagement" value="Registering | Vacationing" icon={Heart} />
+            <MetricCard title="Enrollment" value="Recruiting|Onboarding" icon={Users} />
+            <MetricCard title="Endearment" value="Training|Educating" icon={GraduationCap} />
+            <MetricCard title="Engagement" value="Registering|Vacationing" icon={Heart} />
           </div>
           <EmployeeSection data={employees} loading={isLoadingEmp} />
         </TabsContent>

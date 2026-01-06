@@ -44,7 +44,7 @@ export default function Score() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold text-white font-display">Score</h1>
-          <p className="text-muted-foreground mt-2">Gain, Appraisal, and Payment.</p>
+          <p className="text-muted-foreground mt-2">Gain (Appraisal, Billing, Payment)</p>
         </div>
         
         <Dialog open={open} onOpenChange={setOpen}>
@@ -121,9 +121,9 @@ export default function Score() {
 
         <TabsContent value="gain">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <MetricCard title="Estimate" value="Plan | Quote" icon={Scale} />
-            <MetricCard title="Billing" value="Invoice | Receipt" icon={Receipt} />
-            <MetricCard title="Payment" value="Withdrawal | Deposit" icon={Wallet} />
+            <MetricCard title="Appraisal" value="Estimate" icon={Scale} />
+            <MetricCard title="Billing" value="Invoice|Receipt" icon={Receipt} />
+            <MetricCard title="Payment" value="Withdrawal|Deposit" icon={Wallet} />
           </div>
           <ScoreTable data={score} loading={isLoading} />
         </TabsContent>

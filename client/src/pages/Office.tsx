@@ -44,7 +44,7 @@ export default function Office() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold text-white font-display">Office</h1>
-          <p className="text-muted-foreground mt-2">Economics, Finance, and Accounting.</p>
+          <p className="text-muted-foreground mt-2">StationState (Price) | MarketPlace (Value) | DoubleEntry (Cost)</p>
         </div>
         
         <Dialog open={open} onOpenChange={setOpen}>
@@ -143,13 +143,13 @@ export default function Office() {
       <Tabs defaultValue="economics" className="space-y-6">
         <TabsList className="bg-card border border-white/5 p-1">
           <TabsTrigger value="economics">
-            <TrendingUp className="w-4 h-4 mr-2" /> StationState
+            <TrendingUp className="w-4 h-4 mr-2" /> StationState: (Price) | (Economics)
           </TabsTrigger>
           <TabsTrigger value="finance">
-            <DollarSign className="w-4 h-4 mr-2" /> MarketPlace
+            <DollarSign className="w-4 h-4 mr-2" /> MarketPlace: (Value) | (Finance)
           </TabsTrigger>
           <TabsTrigger value="accounting">
-            <Receipt className="w-4 h-4 mr-2" /> DoubleEntry
+            <Receipt className="w-4 h-4 mr-2" /> DoubleEntry: (Cost) | (Accounting)
           </TabsTrigger>
         </TabsList>
 
@@ -164,18 +164,18 @@ export default function Office() {
 
         <TabsContent value="finance">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <MetricCard title="Cycles" value="Bearish | Bullish" icon={RefreshCcw} />
-            <MetricCard title="Bands" value="Resist | Support" icon={Layers} />
-            <MetricCard title="Funds" value="Sell | Buy" icon={DollarSign} />
+            <MetricCard title="Cycles" value="Bearish|Bullish" icon={RefreshCcw} />
+            <MetricCard title="Bands" value="Resist|Support" icon={BarChart3} />
+            <MetricCard title="Funds" value="Sell|Buy" icon={DollarSign} />
           </div>
           <LedgerTable data={ledger?.filter(e => e.subcategory === 'MarketPlace')} loading={isLoading} />
         </TabsContent>
 
         <TabsContent value="accounting">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <MetricCard title="Accounts" value="Debits | Credits" icon={Scale} />
-            <MetricCard title="Books" value="Left | Right" icon={BookOpen} />
-            <MetricCard title="Units" value="Ratios | Rates" icon={Calculator} />
+            <MetricCard title="Accounts" value="Debits|Credits" icon={Receipt} />
+            <MetricCard title="Books" value="Left|Right" icon={BarChart3} />
+            <MetricCard title="Units" value="Ratios|Rates" icon={TrendingUp} />
           </div>
           <LedgerTable data={ledger?.filter(e => e.subcategory === 'DoubleEntry')} loading={isLoading} />
         </TabsContent>

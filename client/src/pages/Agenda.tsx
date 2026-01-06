@@ -46,7 +46,7 @@ export default function Agenda() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold text-white font-display">Agenda</h1>
-          <p className="text-muted-foreground mt-2">Date, Work, and Talk.</p>
+          <p className="text-muted-foreground mt-2">Date | Work | Talk</p>
         </div>
         
         <Dialog open={open} onOpenChange={setOpen}>
@@ -126,28 +126,25 @@ export default function Agenda() {
         </TabsList>
 
         <TabsContent value="date">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <MetricCard title="Calendar" value="Days | Months" icon={CalendarIcon} />
-            <MetricCard title="Clock" value="Hours | Minutes" icon={Clock} />
-            <MetricCard title="Timeline" value="Past | Future" icon={TrendingUp} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <MetricCard title="Date" value="Calendar|Clock" icon={CalendarIcon} />
+            <div className="hidden" />
           </div>
           <AgendaLayout events={events?.filter(e => e.subcategory === 'Date')} loading={isLoading} date={date} setDate={setDate} />
         </TabsContent>
 
         <TabsContent value="work">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <MetricCard title="Projects" value="Projects | Tasks" icon={CheckSquare} />
-            <MetricCard title="Work" value="Actions | Doing" icon={ClipboardList} />
-            <MetricCard title="Milestones" value="Steps | Results" icon={CheckSquare} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <MetricCard title="Work" value="Projects|Tasks" icon={CheckSquare} />
+            <div className="hidden" />
           </div>
           <AgendaLayout events={events?.filter(e => e.subcategory === 'Work')} loading={isLoading} date={date} setDate={setDate} />
         </TabsContent>
 
         <TabsContent value="talk">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <MetricCard title="Spaces" value="Spaces | Rooms" icon={MessageSquare} />
-            <MetricCard title="Rooms" value="Private | Units" icon={Home} />
-            <MetricCard title="Channels" value="Voice | Data" icon={Clock} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <MetricCard title="Talk" value="Spaces|Rooms" icon={MessageSquare} />
+            <div className="hidden" />
           </div>
           <AgendaLayout events={events?.filter(e => e.subcategory === 'Talk')} loading={isLoading} date={date} setDate={setDate} />
         </TabsContent>

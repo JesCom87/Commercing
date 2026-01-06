@@ -11,7 +11,7 @@ export default function Study() {
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <MetricCard title="Money" value="Standard | Exchange" icon={Coins} />
+        <MetricCard title="Money" value="Money" icon={Coins} />
         <MetricCard title="Evolution" value="Cash → Accrual" icon={TrendingUp} />
         <MetricCard title="Worthability" value="Cost | Value | Price" icon={Landmark} />
         <MetricCard title="Organization" value="Mgmt | Admin" icon={ShieldCheck} />
@@ -19,11 +19,12 @@ export default function Study() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="glass-card p-6">
-          <h3 className="text-lg font-semibold mb-4">Evolutionary Path</h3>
+          <h3 className="text-lg font-semibold mb-4">Commercing:</h3>
           <ul className="space-y-3 text-muted-foreground">
+            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-primary" /> Money</li>
             <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-primary" /> Cash to Accrual is Evolving</li>
-            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-primary" /> Cost | Value | Price = Worthability</li>
-            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-primary" /> Management | Administration = Organization</li>
+            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-primary" /> Cost|Value|Price=Worthabilty</li>
+            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-primary" /> Management|Administration=Organization</li>
           </ul>
         </Card>
         <Card className="glass-card p-6">
