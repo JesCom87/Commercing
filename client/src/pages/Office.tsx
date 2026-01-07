@@ -155,9 +155,9 @@ export default function Office() {
 
         <TabsContent value="economics">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <MetricCard title="Market Forces" value="Supply | Demand" icon={TrendingUp} />
-            <MetricCard title="Lineal Curves" value="Means | Ends" icon={LineChart} />
-            <MetricCard title="Circular Flow" value="Deficiency | Sufficiency" icon={RefreshCcw} />
+            <MetricCard title="Market Forces" value="Supply|Demand" icon={TrendingUp} />
+            <MetricCard title="Lineal Curves" value="Means|Ends" icon={LineChart} />
+            <MetricCard title="Circular Flow" value="Deficiency|Sufficiency" icon={RefreshCcw} />
           </div>
           <LedgerTable data={ledger?.filter(e => e.subcategory === 'StationState')} loading={isLoading} />
         </TabsContent>

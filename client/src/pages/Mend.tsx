@@ -8,22 +8,22 @@ export default function Mend() {
     <Shell>
       <header className="mb-8">
         <h1 className="text-3xl font-bold text-white font-display">Mend</h1>
-        <p className="text-muted-foreground mt-2">Sales optimization and customer support.</p>
+        <p className="text-muted-foreground mt-2">Sales | Support</p>
       </header>
 
       <Tabs defaultValue="sales" className="space-y-6">
         <TabsList className="bg-card border border-white/5 p-1">
           <TabsTrigger value="sales">
-            <ShoppingCart className="w-4 h-4 mr-2" /> Product
+            <ShoppingCart className="w-4 h-4 mr-2" /> Sales
           </TabsTrigger>
           <TabsTrigger value="support">
-            <HeartHandshake className="w-4 h-4 mr-2" /> Customer
+            <HeartHandshake className="w-4 h-4 mr-2" /> Support
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="sales">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <MetricCard title="Product" value="Product" icon={Package} />
+            <MetricCard title="Sales" value="Product" icon={Package} />
             <div className="glass-card p-6 rounded-2xl flex items-center justify-center border border-dashed border-white/10">
               <p className="text-muted-foreground">Product listing details will appear here.</p>
             </div>
@@ -32,7 +32,7 @@ export default function Mend() {
 
         <TabsContent value="support">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <MetricCard title="Customer" value="Customer" icon={User} />
+            <MetricCard title="Support" value="Customer" icon={User} />
             <div className="glass-card p-6 rounded-2xl flex items-center justify-center border border-dashed border-white/10">
               <p className="text-muted-foreground">Customer support interactions will appear here.</p>
             </div>
